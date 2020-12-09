@@ -32,3 +32,8 @@
     ```
 
     see [more about using variants](https://stackoverflow.com/questions/50908342/convert-json-field-to-reasonml-variant) and [this blog post](https://itnext.io/decoding-nested-json-objects-in-reasonml-with-bs-json-4cab75fbe308) for more examples.
+15. Use `reduceU` when you morph one type to another, use `mapU` when you change the structure of events, but keep the same type.
+16. When defining functions keep the types definition in the function, not in the variable, to allow more freedom for type inferrence, i.e. `let a = (b: string, c: int): string => b === "ok"` over `let a: ((string, int) => boolean) = (b, c) => b === "ok"`
+17. **ALWAYS** use `Js.Array2` and `Js.String2`. **NEVER** use `Js.Array` and `Js.String`. This is required to keep the `=>` piping consistent.
+18. Use `List`s for resursive data structures. Use `Array` otherwise.
+
