@@ -50,7 +50,7 @@
 ## Avo Specific Context
 
 
-### Cloud Functions
+### Firebase Cloud Functions
 
 When creating cloud functions, only define a single function in a file, defined as `let handle = {...}`
 
@@ -65,8 +65,8 @@ Types of Triggers
 
 Example:
 ```
-let httpsGetCustomers      = GetCustomersEndpoint.handle;
+let httpsGetCustomers = GetCustomersEndpoint.handle;
 let triggerOnCustomerAdded = OnCustomerAdded.handle;
 let pubsubDeleteUserData = DeleteUserData.handle;
 ```
-The name defined here will be the name of the cloud function it self and helps us to easily map code with function for debugging and logging.
+The name defined here will be the name of the cloud function itself and helps us to easily map code with function for debugging and logging.
