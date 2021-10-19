@@ -44,6 +44,7 @@
 16. Do not overuse reduce. Consider other options, like `map` and `flatMap` to achieve the result. Prefer reduce over `ref` though.
 17. Open `Belt` globally. It saves a lot of typing.
 18. Prefer `Belt.Result` over throwing exceptions. This would make the execution flow more homogeneous. Exceptions are generally considered to be avoided nowadays.
+19. Don't put more than 3 React components in a single file. Use separate files for big components or components that are used in multiple places.
 
 
 ## Avo Specific Context
@@ -69,5 +70,3 @@ let triggerOnCustomerAdded = OnCustomerAdded.handle;
 let pubsubDeleteUserData = DeleteUserData.handle;
 ```
 The name defined here will be the name of the cloud function it self and helps us to easily map code with function for debugging and logging.
-
-
