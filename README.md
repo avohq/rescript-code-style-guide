@@ -45,3 +45,28 @@
 17. Open `Belt` globally. It saves a lot of typing.
 18. Prefer `Belt.Result` over throwing exceptions. This would make the execution flow more homogeneous. Exceptions are generally considered to be avoided nowadays.
 19. Don't put more than 3 React components in a single file. Use separate files for big components or components that are used in multiple places.
+
+
+## Avo Specific Context
+
+
+### Cloud Functions
+
+When creating cloud functions, only define a single function in a file, defined as `let handle = {...}`
+
+In `Index.re` (which relates to `index.js` required by google cloud functions)
+refer to the function with 
+`[Type of Trigger][Name of Function] = File.handle`
+
+Types of Triggers
+   - trigger (Firestore document trigger)
+   - https
+   - pubsub
+
+Example:
+```
+let httpsGetCustomers      = GetCustomersEndpoint.handle;
+let triggerOnCustomerAdded = OnCustomerAdded.handle;
+let pubsubDeleteUserData = DeleteUserData.handle;
+```
+The name defined here will be the name of the cloud function it self and helps us to easily map code with function for debugging and logging.
