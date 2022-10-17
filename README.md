@@ -1,6 +1,6 @@
 # The Avo Rescript Style Guide
 
-At [Avo](https://www.avo.app/) we use Rescript as our primary programming language. To allow the development team to deliver better code and reviews, we've come up with a set of guidelines:
+At [Avo](https://www.avo.app/) we use [Rescript](https://rescript-lang.org/) as our primary programming language. To allow the development team to deliver better code and reviews, we've come up with a set of guidelines:
 
 1. File names, just like modules, should be in PascalCase: `EventsList.res`
 1. Define meaningful types for every variant and polymorphic variant you introduce. For example, when defining `MergeBranch` you would create `type branchName = string` and the definition would look like: `MergeBranch(branchName)` instead of `MergeBranch(string)`
@@ -39,7 +39,7 @@ At [Avo](https://www.avo.app/) we use Rescript as our primary programming langua
 1. Open `Belt` globally. It saves a lot of typing.
 1. Prefer `Belt.Result` over throwing exceptions. This would make the execution flow more homogeneous. Exceptions are generally considered to be avoided nowadays.
 1. Don't put more than 3 React components in a single file. Use separate files for big components or components that are used in multiple places.
-1. Use [`rescript-promise`](https://github.com/ryyppy/rescript-promise#usage)(`Promise.then(…)`) over `Js.Promise`. The bindings are nicer, have stricter error handling and are will be the default as of Rescript 10.1.
+1. Use [`rescript-promise`](https://github.com/ryyppy/rescript-promise#usage)(`Promise.then(…)`) over `Js.Promise`. The bindings are nicer, have stricter error handling and are recommended as of Rescript 10.1.
 
 ### Firebase Cloud Functions
 
