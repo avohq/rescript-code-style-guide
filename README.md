@@ -9,6 +9,10 @@ At [Avo](https://www.avo.app/) we use [Rescript](https://rescript-lang.org/) as 
 1. Tend to use named parameters more often. This is advised for readability.
 1. Imperative code (i.e. the `ref` keyword) should be used only with a very strong reason.
 1. Default to using non polymorphic variants (```type rgb = Red | Green | Blue``` over ```type rgb = [#red | #green | #blue]```). We think of polymorphic variants as a lesser-typed approach and prefer to have stronger types.
+1. Usage of polymorphic is not discouraged. However have in mind that they should always be used strictly typed, if possible. They can be utilised to various benefits, such as
+  * Directly mapping to strings in JS (`#myString` in res -> `"myString"` in JS or even `#"my string" in res -> `"my string"` in JS)
+  * Powerful, categorised switching (`#...partialType => doSomething()`) when used with combined types (See [docs](https://rescript-lang.org/docs/manual/v11.0.0/polymorphic-variant#combine-types-and-pattern-match))
+  * In regards to structural sharing (See [docs](https://rescript-lang.org/docs/manual/v11.0.0/polymorphic-variant#structural-sharing)) where the fact that polymorphic variants don't have a source of truth for their type. Beware that this is just as much a con as it _can_ be a pro and use with care.
 1. Polymorphic variants should be camelCase. `#success` rather than `#Success`.
 1. Non polymorphic variants should be PascalCase. `MergeBranch` rather than `mergeBranch`.
 1. Encapsulate internal code with the `$$private(...)` block, so the public interface of a module is clear and the internal code is not leaked into the public scope.
