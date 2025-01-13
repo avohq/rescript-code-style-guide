@@ -2,17 +2,23 @@
 
 At [Avo](https://www.avo.app/) we use [Rescript](https://rescript-lang.org/) as our primary programming language. To allow the development team to deliver better code and reviews, we've come up with a set of guidelines:
 
-1. File names, just like modules, should be in PascalCase: `EventsList.res`
+1. All file names, just like modules, should be in PascalCase: `EventsList.res`
 1. Define meaningful types for every variant and polymorphic variant you introduce. For example, when defining `MergeBranch` you would create `type branchName = string` and the definition would look like: `MergeBranch(branchName)` instead of `MergeBranch(string)`
-1. Define type signatures explicitly unless you're sure that they should not be defined. Even when the compiler can infer the type it still is often useful to state it explicitly for readability of the code, especially outside of the IDE.
+1. Define type signatures explicitly unless you're sure that they should not be defined. Even when the compiler can infer the type it still is often useful to state it explicitly for readability of the code, especially outside of the IDE and to help the compiler to produce better error messages during refactoring.
 1. Use named parameters if a function has multiple parameters of same type. This will prevent accidentally mixing up the parameters when calling the function.
 1. Tend to use named parameters more often. This is advised for readability.
 1. Imperative code (i.e. the `ref` keyword) should be used only with a very strong reason.
-1. Default to using non polymorphic variants (```type rgb = Red | Green | Blue``` over ```type rgb = [#Red | #Green | #Blue]```). We think of polymorphic variants as a lesser-typed approach and prefer to have stronger typing. 
-1. Polymorphic variants should be lowercase. `#success` rather than `#Success`
-1. Prefer using uncurried functions over curried (i. e. *`reduceU` over `reduce`* in Belt.List*)*, it will help the compiler to produce cleaner error messages in cases when there is a parameters mismatch, which happens quite often during refactoring. Another benefit is that it performs better on runtime.
-1. Put multiline styles in the top of the file. 
-1. When deciding between `thing->function->function` and `function(thing)->function` read it out and pick the one that makes more sense in a natural language, i.e. `Firebase.firestore(firebase)->Firebase.root("main")` and `maybeSomething->Belt.Option.getWithDefault("definitelySomething")`
+1. Default to using non polymorphic variants (```type rgb = Red | Green | Blue``` over ```type rgb = [#red | #green | #blue]```). We think of polymorphic variants as a lesser-typed approach and prefer to have stronger types.
+1. Usage of polymorphic is not discouraged. However have in mind that they should always be used strictly typed, if possible. They can be utilised to various benefits, such as
+  * Directly mapping to strings in JS (`#myString` in res -> `"myString"` in JS or even `#"my string" in res -> `"my string"` in JS)
+  * Powerful, categorised switching (`#...partialType => doSomething()`) when used with combined types (See [docs](https://rescript-lang.org/docs/manual/v11.0.0/polymorphic-variant#combine-types-and-pattern-match))
+  * In regards to structural sharing (See [docs](https://rescript-lang.org/docs/manual/v11.0.0/polymorphic-variant#structural-sharing)) where the fact that polymorphic variants don't have a source of truth for their type. Beware that this is just as much a con as it _can_ be a pro and use with care.
+1. Polymorphic variants should be camelCase. `#success` rather than `#Success`.
+1. Non polymorphic variants should be PascalCase. `MergeBranch` rather than `mergeBranch`.
+1. Encapsulate internal code with the `$$private(...)` block, so the public interface of a module is clear and the internal code is not leaked into the public scope.
+1. Prefer using uncurried functions over curried (i. e. *`reduceU` over `reduce`* in Belt.List*)*, it will help the compiler to produce cleaner error messages in cases when there is a parameters mismatch, which happens quite often during refactoring. Another benefit is that it performs better in runtime.
+1. Put multiline styles in the top of the file.
+1. When deciding between `thing->function->function` and `function(thing)->function` read it out and pick the one that makes more sense in a natural language, i.e. `Firebase.firestore(firebase)->Firebase.root("main")` and `maybeSomething->Belt.Option.getWithDefault("definitelySomething")`.
 1. When working with JSON create decoders and encoders with the `bs-json` lib
     ```bash
     Json.Decode.(field("token", string, "myToken"))
@@ -40,6 +46,7 @@ At [Avo](https://www.avo.app/) we use [Rescript](https://rescript-lang.org/) as 
 1. Prefer `Belt.Result` over throwing exceptions. This would make the execution flow more homogeneous. Exceptions are generally considered to be avoided nowadays.
 1. Don't put more than 3 React components in a single file. Use separate files for big components or components that are used in multiple places.
 1. Use [`rescript-promise`](https://github.com/ryyppy/rescript-promise#usage)(`Promise.then(…)`) over `Js.Promise`. The bindings are nicer, have stricter error handling and are recommended as of Rescript 10.1.
+1. If you want to use `open` locally, use it inside a function.
 
 ### Firebase Cloud Functions
 
